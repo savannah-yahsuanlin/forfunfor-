@@ -8,7 +8,6 @@ const input = document.querySelector<HTMLInputElement> ('#new-task-title')
 const tasks: Task[] = loadTasks()
 tasks.forEach(addListItem)
 
-
 form?.addEventListener('submit', (e) => {
 	e.preventDefault();
 	if(input?.value === undefined || input?.value === '') return   
@@ -38,10 +37,8 @@ function addListItem(task: Task) {
 	checkbox.type = 'checkbox' 
 	checkbox.checked = task.completed
 	button.type = 'button'
-	button.addEventListener('click', () => {
-		item.remove()
-	})
 	button.textContent = 'X'
+	removeTask(item)
 	label.append(checkbox, task.title, button)
 	item.append(label)
 	list?.append(item)
@@ -56,3 +53,15 @@ function loadTasks():Task[] {
 	if(response === null) return []
 	return JSON.parse(response)
 }
+function removeTask(Task:any) {
+	const lis = document.getElementById('list')?.querySelectorAll('li')!
+	const buttons = document.getElementById('list')?.getElementsByTagName('button')
+	if(Array.isArray(buttons)) {
+		buttons.map((button, index) => {
+			button.addEventListener("click", function() {
+				return lis[index].remove()
+			})
+		})	
+	}
+}
+
