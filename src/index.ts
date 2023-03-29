@@ -30,19 +30,25 @@ function addListItem(task: Task) {
 	const item = document.createElement('li')
 	const label = document.createElement('label')
 	const checkbox = document.createElement('input')
+	const button = document.createElement('button')
 	checkbox.addEventListener('change', () => {
 		task.completed = checkbox.checked
 		saveTasks()
 	})
 	checkbox.type = 'checkbox' 
 	checkbox.checked = task.completed
-	label.append(checkbox, task.title)
+	button.type = 'button'
+	button.addEventListener('click', () => {
+		item.remove()
+	})
+	button.textContent = 'X'
+	label.append(checkbox, task.title, button)
 	item.append(label)
 	list?.append(item)
 }
 
 function saveTasks() {
-	 localStorage.setItem('TASKS', JSON.stringify(tasks ))
+	 localStorage.setItem('TASKS', JSON.stringify(tasks))
 }
 
 function loadTasks():Task[] {
