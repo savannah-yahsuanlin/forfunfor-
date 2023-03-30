@@ -38,7 +38,10 @@ function addListItem(task: Task) {
 	checkbox.checked = task.completed
 	button.type = 'button'
 	button.textContent = 'X'
-	removeTask(item)
+	button.addEventListener('click', () => {
+		item.classList.add('delete')
+		removeTask(item)
+	})
 	label.append(checkbox, task.title, button)
 	item.append(label)
 	list?.append(item)
@@ -53,15 +56,12 @@ function loadTasks():Task[] {
 	if(response === null) return []
 	return JSON.parse(response)
 }
-function removeTask(Task:any) {
-	const lis = document.getElementById('list')?.querySelectorAll('li')!
-	const buttons = document.getElementById('list')?.getElementsByTagName('button')
-	if(Array.isArray(buttons)) {
-		buttons.map((button, index) => {
-			button.addEventListener("click", function() {
-				return lis[index].remove()
-			})
-		})	
+
+
+
+function removeTask() {
+	const elements = document.getElementsByClassName('delete')! as HTMLCollectionOf<Element>
+	if(elements instanceof HTMLElement) {
+		elements[0].parentNode?.removeChild(elements[0]);
 	}
 }
-
